@@ -96,3 +96,59 @@ sumOfSquares x y = x*x + y*y
 ```
 
 # Prolog
+```prolog
+rodzice(uranus, gaia, rhea).
+ojciec(X, Y) :- rodzice(X, _, Y).
+matka(X, Y) :- rodzice(_, X, Y).
+rodzic(X, Y) :- ojciec(X, Y); matka(X, Y).
+dziadek(X, Z) :- ojciec(X, Y), rodzic(Y, Z).
+```
+```prolog
+kolor(czerwony). kolor(zielony). kolor(niebieski).
+
+rozmieszczenie(P, L, M, Pd, WM) :-
+    kolor(P), kolor(L), kolor(M), kolor(Pd), kolor(WM),
+    P \= L, P \= M,
+    L \= M, L \= Pd,
+    M \= Pd, M \= WM,
+    Pd \= WM.
+```
+```prolog
+nww(X, X, X).
+nww(X, Y, R) :- X > Y, X1 is X - Y, nww(X1, Y, R).
+nww(X, Y, R) :- Y > X, Y1 is Y - X, nww(X, Y1, R).
+```
+```prolog
+sklad(s1). sklad(s2). sklad(s3). sklad(s4).
+produkt(p1, s1). produkt(p1, s3).
+produkt(p2, s2). produkt(p2, s3).
+dostepny(s1). dostepny(s3).
+
+moznaprodukowac(X) :-
+    produkt(X, S1), dostepny(S1),
+    \+ (produkt(X, S), \+ dostepny(S)).
+
+potrzebuje(X, Y) :- produkt(X, Y).
+```
+Operacje na listach
+```prolog
+nalezy(X, [X|_]).
+nalezy(X, [_|T]) :- nalezy(X, T).
+
+dlugosc([], 0).
+dlugosc([_|T], D) :- dlugosc(T, D1), D is D1 + 1.
+
+suma([], 0).
+suma([H|T], S) :- suma(T, S1), S is H + S1.
+
+ostatni(X, [X]).
+ostatni(X, [_|T]) :- ostatni(X, T).
+
+odwroc([], []).
+odwroc([H|T], R) :- odwroc(T, RT), append(RT, [H], R).
+```
+```prolog
+?- append([a], [b], R).         % R = [a, b]
+?- append(X, Y, [a, b]).        % znajdowanie podlist
+?- select(X, [1,2,3], L).       % usuwa X z listy
+```
